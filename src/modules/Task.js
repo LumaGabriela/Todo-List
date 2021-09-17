@@ -1,8 +1,13 @@
-export function createTask(title, date, checked){
-    return{title, date, checked}
+export function createTask(title, date, checked, i){
+    return{title, date, checked, i}
 }
-export function aaa(){
-    const task = []
-    task.push(createTask(title, date, check))
+const task = []
+export function addTodo(title,date,check, i){
+    task.push(createTask(title, date, check, i))
     console.log(task)
+    return task
+}
+
+export function removeTodo(i){
+    task[i] = ''
 }

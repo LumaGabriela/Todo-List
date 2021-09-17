@@ -1,4 +1,3 @@
 import {taskDOM} from './modules/UI'
-import {aaa} from './modules/Task'
+import {addTodo} from './modules/Task'
 const menu = document.querySelector('#menu')
-

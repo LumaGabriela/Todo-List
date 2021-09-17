@@ -1,25 +1,57 @@
 import {compareAsc, format, formatDistance } from 'date-fns'
-import { createTask } from './Task'
+import { createTask, removeTodo } from './Task'
+import { addTodo } from './Task'
+const todo = []
 export function taskDOM(){ 
     const content = document.querySelector('#content')
-    const add = document.querySelector('#add')
+    const taskField = document.querySelector('#task-field')
     
-    let count = content.childElementCount
-    const todo = []
+    let count = content.childElementCount -1
     todo[count] = document.createElement('div')
     todo[count].innerHTML = `<div class='left'>
-    <input type='checkbox' id="check" name="check">
-    <input type='text' id='task${count}' class="task-name"></div>
-    <div class='right'><input type="date" id="date"><button id="remove"><i class="fas fa-trash-alt"></i></button></div>`
+    <input type='checkbox' class="check" name="check">
+    <input type='text' id='task${count}' class="task-name">
+    <p id='title${count}' class='edit-titles'></p></div>
+    <div class='right'><input type="date" id="date">
+    <button class="remove"><i class="fas fa-trash-alt"></i></button></div>`
     todo[count].setAttribute('class', 'task')
-    // Add var elements 
-    const title = []
-    title[count] = document.querySelector(`#task${count}`)
-    content.insertBefore(todo[count], add)
-    console.log(todo)
+    content.insertBefore(todo[count], taskField)
+    // Add field elements 
+    const title = document.querySelector('#task-title').value
+    let editTitles = document.getElementsByClassName('edit-titles')
+    let check = document.querySelectorAll('.check')
+    
+    check[count].checked = true
+    editTitles[count].innerText = title
+    console.log(count)
+    //Add values to the object
+    addTodo(title, '16/09/2021', true, count)
+    removeDOM()
 }
+
 export function removeDOM(){
-    //
+    let removeBtn = document.querySelectorAll('.remove')
+    removeBtn.forEach((btn, i) => {
+        btn.addEventListener('mouseup', function () {
+            btn.parentNode.parentNode.remove()
+            removeTodo(i) 
+        })
+               
+    });
 }
-const addBtn = document.querySelector('#add-btn')
-addBtn.onclick = taskDOM
+const btnOpen = document.querySelector('#open-menu')
+btnOpen.addEventListener('mouseup', addListeners)
+
+export function addListeners(){
+    const task = document.querySelector('#task-field')
+    task.classList.add('active')
+    const btnClose = document.querySelector('#close-btn')
+    btnClose.addEventListener('mouseup', ()=>{
+        task.classList.remove('active')
+    })
+    const addTask = document.querySelector('#add-task')
+    addTask.addEventListener('mouseup', ()=>{
+    taskDOM()
+    //task.classList.remove('active')
+    })
+}
