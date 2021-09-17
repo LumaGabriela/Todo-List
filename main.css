@@ -81,21 +81,33 @@ body{
     align-items: center;
     height: 100%;
 }
-.task .righ{
+.task .right{
     display: flex;
     flex-direction: row;
     align-items: center;
     height: 100%;
 }
-.task .task-name{
+#task-field #task-field-name{
     margin: 0;
+}
+#task-info{
+    display: none;
+}
+#task-field.active > #add-div{
+    display: none;
+}
+#task-field.active > #task-info{
+    display: flex;
+}
+.task-name{
+    display: none;
 }
 #date{
     width: 130px; height: 17px;
     border-radius: 5px;
     border: 1px solid var(--header)
 }
-#remove{
+.remove{
     background: transparent;
     border: none;
     cursor: pointer;
