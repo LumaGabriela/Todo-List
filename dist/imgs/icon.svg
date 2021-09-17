@@ -1,0 +1,11 @@
+<svg width="512" height="512" xmlns="http://www.w3.org/2000/svg" role="img" class="svg-inline--fa fa-check-double fa-w-16" data-icon="check-double" data-prefix="fas" focusable="false" aria-hidden="true">
+ <defs>
+  <filter id="svg_1_blur">
+   <feGaussianBlur stdDeviation="0.4" in="SourceGraphic"/>
+  </filter>
+ </defs>
+ <g>
+  <title>Layer 1</title>
+  <path filter="url(#svg_1_blur)" stroke="#FFFF91" id="svg_1" d="m506.05,174.8l-39.6,-39.6c-9.4,-9.4 -24.6,-9.4 -33.9,0l-239.5,239.5l-111.4,-111.5c-9.4,-9.4 -24.6,-9.4 -33.9,0l-39.7,39.7c-9.4,9.4 -9.4,24.6 0,34l168,168.1c9.4,9.4 24.6,9.4 33.9,0l296,-296.2c9.4,-9.5 9.4,-24.7 0.1,-34zm-324.3,106c6.2,6.3 16.4,6.3 22.6,0l208,-208.2c6.2,-6.3 6.2,-16.4 0,-22.6l-45.2,-45.3c-6.2,-6.3 -16.4,-6.3 -22.6,0l-151.5,151.5l-55.4,-55.5c-6.2,-6.3 -16.4,-6.3 -22.6,0l-45.3,45.3c-6.2,6.3 -6.2,16.4 0,22.6l112,112.2z" fill="#ff672b"/>
+ </g>
+</svg>

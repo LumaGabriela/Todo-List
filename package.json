@@ -1,0 +1,29 @@
+{
+  "name": "todo-list",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "webpack --watch",
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LumaGabriela/Todo-List.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LumaGabriela/Todo-List/issues"
+  },
+  "homepage": "https://github.com/LumaGabriela/Todo-List#readme",
+  "devDependencies": {
+    "webpack": "^5.53.0",
+    "webpack-cli": "^4.8.0"
+  },
+  "dependencies": {
+    "date-fns": "^2.23.0"
+  }
+}
