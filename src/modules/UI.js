@@ -1,12 +1,12 @@
 import {compareAsc, format, formatDistance } from 'date-fns'
 import { createTask, removeTodo } from './Task'
-import { addTodo } from './Task'
+import { addTodo, task } from './Task'
 const todo = []
 export function taskDOM(){ 
     const content = document.querySelector('#content')
     const taskField = document.querySelector('#task-field')
     
-    let count = content.childElementCount -1
+    let count = task.length
     todo[count] = document.createElement('div')
     todo[count].innerHTML = `<div class='left'>
     <input type='checkbox' class="check" name="check">
@@ -23,10 +23,10 @@ export function taskDOM(){
     
     check[count].checked = true
     editTitles[count].innerText = title
-    console.log(count)
     //Add values to the object
     addTodo(title, '16/09/2021', true, count)
     removeDOM()
+    console.log(task)
 }
 
 export function removeDOM(){
@@ -35,6 +35,7 @@ export function removeDOM(){
         btn.addEventListener('mouseup', function () {
             btn.parentNode.parentNode.remove()
             removeTodo(i) 
+            console.log(i)
         })
                
     });
