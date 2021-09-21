@@ -4,23 +4,23 @@ function createTask(title, date, checked, project){
     return{title, date, checked, project}
 }
 export let project = []
+export let home = []
+export let today = []
+export let thisWeek = []
 
-export let task = []
-
-export function addTodo(title,date,check, proj){
-    project[currentIndex].todos.push(createTask(title, date, check, proj))
-    console.log(project[currentIndex].todos)
+export function addTodo( type,title,date,check, proj){
+    type.push(createTask(title, date, check, proj))
 }
 
-export function removeTodo(i){
-    project[currentIndex].todos.splice(i,1)
+export function removeTodo(i, type){
+    type.splice(i,1)
 }
 function createProject(title, todos){
     return {title, todos}
 }
 export function addProject(title, todos){
     project.push(createProject(title, todos))
-    console.log(project)
+
 }
 export function removeProject(i){
     project.splice(i,1)

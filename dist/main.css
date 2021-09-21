@@ -109,7 +109,21 @@ body{
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: flex-end;
     height: 100%; width: 50%;
+}
+/*  */
+
+
+#task-list{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+}
+#task-field.invisible{
+    display: none;
 }
 #task-field #task-field-name{
     margin: 0;
@@ -123,6 +137,7 @@ body{
 #task-field.active > #task-info{
     display: flex;
 }
+/*  */
 .task-name{
     display: none;
 }
@@ -142,8 +157,24 @@ body{
     width: 80%;
     cursor: pointer;
 }
+/*  */
+.edit-dates{
+    display: none;
+}
+.edit-dates.active{
+    display: flex;
+    cursor: pointer;
+    width: 80%; height: 100%;
+    margin: 0;
+    color: var(--header);
+}
+
 .date{
-    width: 130px; height: 17px;
+    display: none;
+}
+.date.active{
+    display: flex;
+    width: 130px; height: 20px;
     border-radius: 5px;
     border: 1px solid var(--header)
 }
