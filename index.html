@@ -27,19 +27,33 @@
                 <button class="btn" id="today-btn" name="today">Today</button>
                 <button class="btn" id="week-btn" name="week">This Week</button>
             </div>
-            <div class="projects">
+            <div id="projects">
                 <h2>Projects</h2>
+                <div id="project-div">
+                    <button id="open-project" class="active"><i class="fas fa-plus"></i>Add Project</button>
+                    <div id="project-info">
+                        <input type="text" id="project-title" name="project-title">
+                        <button id="edit-project"></button>
+                        <div>
+                            <button id="close-project"><i class="fas fa-ban"></i></button>
+                            <button id="add-project"><i class="fas fa-check"></i></button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
         <section id="content">
+            <h1 id="current-project"></h1>
             <div id="task-field" class="task">
                 <div id="add-div">
-                    <button id="open-menu"><i class="fas fa-plus"></i></button>
+                    <button id="open-menu"><i class="fas fa-plus"></i>Add task</button>
                 </div>
                 <div id="task-info">
                     <input type="text" id="task-title" name="task"> 
-                    <button id="close-btn"><i class="fas fa-ban"></i></button>
-                    <button id="add-task"><i class="fas fa-check"></i></button>
+                    <div>
+                        <button id="close-btn"><i class="fas fa-ban"></i></button>
+                        <button id="add-task"><i class="fas fa-check"></i></button>
+                    </div>
                 </div>
             </div>
         </section>

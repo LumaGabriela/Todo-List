@@ -52,10 +52,33 @@ body{
     display: flex;
     flex-direction: column;
 }
-#menu .projects{
+#menu{
     display: flex;
     flex-direction: column;
 }
+#project-info, #edit-project, #open-project{
+    display: none;
+}
+#edit-project.active{
+    display: flex;
+}
+#open-project.active{
+    display: flex;
+}
+#project-info.active{
+    display: flex;
+}
+.projects{
+    display: flex;
+    flex-direction: row;
+}
+.projects .btn-project{
+    width: 90%;
+}
+.projects .remove-project{
+    width: 10%;
+}
+/* Content and todos */
 #content{
     background: var(--content);
     width: 65%;
@@ -65,6 +88,7 @@ body{
     align-items: center;
     padding: 15px 0 0;
 }
+
 .task{
     display: flex;
     flex-direction: row;
