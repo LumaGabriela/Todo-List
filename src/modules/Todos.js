@@ -1,15 +1,17 @@
 import {compareAsc, format, formatDistance } from 'date-fns'
-import { createTask, removeTodo } from './Task'
-import { addTodo, task } from './Task'
+import {removeTodo, addTodo, task, project  } from './Task'
+import {currentIndex, currentProject} from './Projects'
+//
 let todo = []
 let removeBtn = []
 let dates = []
 let checkbox = []
 let editTitles = []
-export function taskDOM(){
-    const title = document.querySelector('#task-title').value
-    addTodo(title, '', '', task.length)
-    for(let i=0; i<task.length; i++) {  
+ 
+export function taskDOM(){console.log(currentProject)
+    const title = document.querySelector('#task-title').value  
+    console.log(project)
+    for(let i=0; i<project[currentIndex].todos.length; i++) {  
         if(!todo[i]){     
             const content = document.querySelector('#content')
             const taskField = document.querySelector('#task-field')
@@ -28,9 +30,7 @@ export function taskDOM(){
             dates[i] = document.querySelectorAll('.date')[i]
             checkbox[i] = document.querySelectorAll('.check')[i]            
             editTitles[i] = document.querySelectorAll('.edit-titles')[i]
-            //editTitles[i].classList.add('active')
-            editTitles[i].innerText = title
-            
+            editTitles[i].innerText = project [currentIndex].todos[i].title   
         }
     }
     addChanges()
@@ -52,14 +52,14 @@ function editTask(){
         }
     })
     editInput.forEach((input,i)=>{
+        input.value = editTitles[i].innerHTML
         input.onkeyup = function (event){
             if(event.key === 'Enter'){
                 editTitles[i].innerHTML = input.value
-                task[i].title = input.value
+                project[currentIndex].todos.title = input.value
                 input.classList.remove('active')
                 editTitles[i].classList.add('active')
             }
-            console.log(task)
         }
     })
 }
@@ -71,9 +71,6 @@ export function removeDOM(){
             removeTodo(i) 
             todo.splice(i,1)
             removeBtn.splice(i,1)
-            console.log(task)
-            console.log(todo)
-            console.log(removeBtn)
         }
                
     });
@@ -82,17 +79,16 @@ export function removeDOM(){
 function changeCheck(){
     checkbox.forEach((check,i)=> {
         check.addEventListener('change', () =>{
-            task[i].checked = check.checked
+            project[currentIndex].todos[i].checked = check.checked
         })
     })
 }
 //Change the status of the date inputs
 function changeDate(){
-    
     dates.forEach((date,i)=> {
         date.addEventListener('change', () =>{
-            task[i].date = date.value
-            console.log(task)
+            project[currentIndex].todos[i].date = date.value
+            console.log(project)
         })
     })
 }
@@ -108,8 +104,19 @@ export function addListeners(){
         taskField.classList.remove('active')
     })
     const addTask = document.querySelector('#add-task')
+      
     addTask.addEventListener('mouseup', ()=>{
+        const title = document.querySelector('#task-title').value
+        addTodo(title, '', false, currentProject)
     taskDOM()
     //task.classList.remove('active')
     })
+}
+export function clearTasks(){
+    todo = []
+    removeBtn = []
+    const content = document.querySelector('#content')
+    while (content.childElementCount>1){
+        content.firstChild.remove()
+    }
 }
