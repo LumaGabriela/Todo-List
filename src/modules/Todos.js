@@ -1,7 +1,10 @@
 import {compareAsc, format, formatDistance } from 'date-fns'
-import {removeTodo, addTodo, task, project, home  } from './Task'
-import {currentIndex, currentProject, patterns, showTasks, todoSelector} from './Projects'
+import {removeTodo, addTodo, project, home  } from './Task'
+import {currentIndex, currentProject, currentProjectH1, patterns, showTasks, todoSelector} from './Projects'
+import {populateStorage} from './Task'
 //
+//
+// Todos
 let todo = []
 let removeBtn = []
 let dates = []
@@ -10,7 +13,13 @@ let checkbox = []
 let editTitles = []
 
 //Display todos on screen
-export function taskDOM(type){console.log(currentProject)
+export function taskDOM(type){
+    if(todoSelector === 0){
+        currentProjectH1.innerText = 'Home'
+        addListeners(home)
+        clearTasks()
+        showTasks()
+    }
     const taskList = document.querySelector('#task-list')
     for(let i=0; i<type.length; i++) {  
         if(!todo[i]){     
@@ -34,18 +43,9 @@ export function taskDOM(type){console.log(currentProject)
             editTitles[i].innerText = type[i].title  
             if(type[i].date !== ''){datesText[i].innerText = type[i].date} 
         }
-    }console.log(todoSelector)
+    }
     addChanges(type)
 }
-//
-// export let todoSelector 
-// const homeBtn = document.querySelector('#home-btn')
-// homeBtn.addEventListener('mouseup', ()=> {console.log('homee')
-//     todoSelector = home
-//     currentProject = 'pato'
-//     addListeners(todoSelector)
-//     showTasks()
-// })
 //Add changes to input, date, checkboxes
 function addChanges(type){
     removeDOM(type)
@@ -60,6 +60,7 @@ function editTask(type){
         eTitles.onmouseup = ()=>{
             eTitles.classList.remove('active')
             editInput[i].classList.add('active')
+            populateStorage()
         }
     })
     editInput.forEach((input,i)=>{
@@ -70,6 +71,7 @@ function editTask(type){
                 type[i].title = input.value
                 input.classList.remove('active')
                 editTitles[i].classList.add('active')
+                populateStorage()
             }
         }
     })
@@ -89,6 +91,7 @@ function changeDate(type){
             datesText[i].innerText = input.value
             datesText[i].classList.add('active')
             input.classList.remove('active')
+            populateStorage()
         }
     })
 }
@@ -101,6 +104,7 @@ export function removeDOM(type){
             removeTodo(i, type) 
             todo.splice(i,1)
             removeBtn.splice(i,1)
+            populateStorage()
         }
                
     });
@@ -110,6 +114,7 @@ function changeCheck(type){
     checkbox.forEach((check,i)=> {
         check.addEventListener('change', () =>{
             type[i].checked = check.checked
+            populateStorage()
         })
     })
 }
@@ -123,17 +128,21 @@ btnOpen.addEventListener('mouseup', ()=> {
         taskField.classList.remove('active')
     })
     console.log(todoSelector)
-    addListeners(todoSelector)
+    if(todoSelector === 0){
+        addListeners(home)
+    }else if(todoSelector === 1){
+        addListeners(project[currentIndex].todos)
+    }
 })
 //Add listener for open and close the title menu
-export function addListeners(selector){
+export function addListeners(selector){console.log(selector)
     const title = document.querySelector('#task-title').value 
     const taskField = document.querySelector('#task-field')
     const addTask = document.querySelector('#add-task')
-      
     addTask.onmouseup = ()=>{
         if(patterns.title.test(title.value)=== true){console.log('todo added')
             const title = document.querySelector('#task-title').value
+            
             addTodo(selector , title, '', false, currentProject)
             taskDOM(selector)
             taskField.classList.remove('active')

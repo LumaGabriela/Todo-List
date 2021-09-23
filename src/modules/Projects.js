@@ -1,7 +1,8 @@
 import { taskDOM , clearTasks, addListeners} from "./Todos";
 import { project, addProject, removeProject, home , today, thisWeek } from './Task'
+
 //Add project lists
-const currentProjectH1 = document.querySelector('#current-project')
+export const currentProjectH1 = document.querySelector('#current-project')
 export let currentProject = ''
 export let currentIndex = 0
 const remProject = [] 
@@ -15,7 +16,6 @@ export function projectDOM(){console.log('projectDOM')
     const projectDiv = document.querySelector('#project-div')
     const title = document.querySelector('#project-title')
     currentProjectH1.innerText = currentProject
-    todoSelector = project[currentIndex].todos
     showTasks()
     for(let i=0; i<project.length; i++){
         if(!projects[i]){
@@ -35,49 +35,24 @@ export function projectDOM(){console.log('projectDOM')
     }
     deleteProject()
     selectProject()
-    console.log(project)
 }
 //
-const btnOpen = document.querySelector('#open-menu')
-btnOpen.addEventListener('mouseup', ()=> {
-    addListeners(todoSelector)
-})
-export let todoSelector 
+export let todoSelector = 0
 const homeBtn = document.querySelector('#home-btn')
 homeBtn.addEventListener('mouseup', ()=> {
-    todoSelector = home
+    todoSelector = 0
     currentProject = 'Home'
     currentProjectH1.innerText = currentProject
-    addListeners(todoSelector)
+    addListeners(home)
     clearTasks()
-    taskDOM(todoSelector)
-    showTasks()
-})
-//
-const todayBtn = document.querySelector('#today-btn')
-todayBtn.addEventListener('mouseup', ()=> {
-    todoSelector = today
-    currentProject = 'Today'
-    currentProjectH1.innerText = currentProject
-    addListeners(todoSelector)
-    clearTasks()
-    taskDOM(todoSelector)
-    showTasks()
-})
-const weekBtn = document.querySelector('#week-btn')
-weekBtn.addEventListener('mouseup', ()=> {
-    todoSelector = today
-    currentProject = 'This Week'
-    currentProjectH1.innerText = currentProject
-    addListeners(todoSelector)
-    clearTasks()
-    taskDOM(todoSelector)
+    console.log(home)
+    taskDOM(home)
     showTasks()
 })
 //Show task menu
 export function showTasks(){
     const taskField = document.querySelector('#task-field')
-    if(project.length > 0 || todoSelector == home){
+    if(project.length > 0 || todoSelector === 0){
         taskField.classList.remove('invisible')
     }else {
         taskField.classList.add('invisible')
@@ -88,7 +63,11 @@ function deleteProject(){
         btn.onmouseup = ()=> {
             btn.parentNode.remove()
             remProject.splice(i,1)
-            removeProject(i, todoSelector)
+            if(todoSelector === 0){
+                removeProject(i, home)
+            }else if(todoSelector === 1){
+                removeProject(i, project[currentIndex].todos)
+            }
             projects.splice(i,1)
             showTasks()
             if(i !== 0 ){
@@ -100,7 +79,7 @@ function deleteProject(){
                 currentIndex = i
                 currentProjectH1.innerHTML = currentProject
             }
-            todoSelector = project[currentIndex].todos
+            todoSelector = 1
         }
     })
 }
@@ -113,10 +92,12 @@ function selectProject(){
             currentProject = project[i].title
             currentIndex = i
             currentProjectH1.innerHTML = currentProject
-            todoSelector = project[currentIndex].todos
+            todoSelector = 1
             clearTasks()
-            taskDOM(todoSelector)
-            addListeners(todoSelector)
+            taskDOM(project[currentIndex].todos)
+            addListeners(project[currentIndex].todos)
+
+            
         }
     })
 }
@@ -147,12 +128,12 @@ export function projectListener(){console.log('patos funcionando')
             projectInfo.classList.remove('active')
             openProject.classList.add('active')
             addProject(currentProject, [])
-            clearTasks()
-            taskDOM(todoSelector)
-            addListeners(todoSelector)
+            clearTasks() 
+            console.log(project)
+            taskDOM(project[currentIndex].todos)
             projectDOM()
+            todoSelector = 1
         }    
     }
 }
 
-export * from './Projects'
