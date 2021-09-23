@@ -25,12 +25,12 @@ export function taskDOM(type){
         if(!todo[i]){     
             // Create task field    
             todo[i] = document.createElement('div')
-            todo[i].innerHTML = `<div class='left'>
-            <input type='checkbox' class="check" name="check">
+            todo[i].innerHTML = `<div class='left'><label class="check-label">
+            <input type='checkbox' class="check" name="check"><span class="span-check"></span></label>
             <input type='text' class="task-name">
             <p class='edit-titles active'></p></div>
             <div class='right'><p class='edit-dates active'>No Date</p><input type="date" class="date">
-            <button class="remove"><i class="fas fa-trash-alt"></i></button></div>`
+            <button class="remove"><i class="fas fa-times"></i></button></div>`
             todo[i].setAttribute('class', 'task')
             taskList.appendChild(todo[i])
             // Add field elements 
@@ -60,7 +60,6 @@ function editTask(type){
         eTitles.onmouseup = ()=>{
             eTitles.classList.remove('active')
             editInput[i].classList.add('active')
-            populateStorage()
         }
     })
     editInput.forEach((input,i)=>{
@@ -69,9 +68,10 @@ function editTask(type){
             if(event.key === 'Enter'){
                 editTitles[i].innerHTML = input.value
                 type[i].title = input.value
+                populateStorage()
                 input.classList.remove('active')
                 editTitles[i].classList.add('active')
-                populateStorage()
+                
             }
         }
     })
@@ -80,18 +80,18 @@ function editTask(type){
 function changeDate(type){
     datesText.forEach((p,i)=> {
         p.onmouseup = ()=>{
-            console.log('passei o mosue')
             p.classList.remove('active')
             dates[i].classList.add('active')
         }
     })
     dates.forEach((input, i) => {
-        input.onchange = () => {console.log(input.value)
+        input.onchange = () => {
             type[i].date = input.value
             datesText[i].innerText = input.value
+            populateStorage()
             datesText[i].classList.add('active')
             input.classList.remove('active')
-            populateStorage()
+            
         }
     })
 }
@@ -104,7 +104,6 @@ export function removeDOM(type){
             removeTodo(i, type) 
             todo.splice(i,1)
             removeBtn.splice(i,1)
-            populateStorage()
         }
                
     });
@@ -127,7 +126,6 @@ btnOpen.addEventListener('mouseup', ()=> {
     btnClose.addEventListener('mouseup', ()=>{
         taskField.classList.remove('active')
     })
-    console.log(todoSelector)
     if(todoSelector === 0){
         addListeners(home)
     }else if(todoSelector === 1){
@@ -135,14 +133,13 @@ btnOpen.addEventListener('mouseup', ()=> {
     }
 })
 //Add listener for open and close the title menu
-export function addListeners(selector){console.log(selector)
+export function addListeners(selector){
     const title = document.querySelector('#task-title').value 
     const taskField = document.querySelector('#task-field')
     const addTask = document.querySelector('#add-task')
     addTask.onmouseup = ()=>{
-        if(patterns.title.test(title.value)=== true){console.log('todo added')
+        if(patterns.title.test(title.value)=== true){
             const title = document.querySelector('#task-title').value
-            
             addTodo(selector , title, '', false, currentProject)
             taskDOM(selector)
             taskField.classList.remove('active')
@@ -152,6 +149,11 @@ export function addListeners(selector){console.log(selector)
 export function clearTasks(){
     todo = []
     removeBtn = []
+    dates = []
+    datesText = []
+    checkbox = []
+    editTitles = []
+
     const taskList = document.querySelector('#task-list')
     while (taskList.childElementCount>0){
         taskList.firstChild.remove()

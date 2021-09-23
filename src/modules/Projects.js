@@ -3,18 +3,17 @@ import { project, addProject, removeProject, home , today, thisWeek } from './Ta
 
 //Add project lists
 export const currentProjectH1 = document.querySelector('#current-project')
-export let currentProject = ''
+export let currentProject = 'Home'
 export let currentIndex = 0
 const remProject = [] 
 let projects = []
 export let patterns = {
     title: /^.{1,20}$/,
 }
-export function projectDOM(){console.log('projectDOM')
+export function projectDOM(){
     const currentProjectH1 = document.querySelector('#current-project')
     const projectContainer = document.querySelector('#projects')
     const projectDiv = document.querySelector('#project-div')
-    const title = document.querySelector('#project-title')
     currentProjectH1.innerText = currentProject
     showTasks()
     for(let i=0; i<project.length; i++){
@@ -28,15 +27,17 @@ export function projectDOM(){console.log('projectDOM')
         //create elements
         projects[i] = document.createElement('div')
         projects[i].setAttribute('class', 'projects')
-        projects[i].innerHTML = `<button class="btn-project">${title.value}</button><button class="remove-project"><i class="fas fa-times"></i></button>`
+        projects[i].innerHTML = `<button class="btn-project"></button><button class="remove-project"><i class="fas fa-times"></i></button>`
         projectContainer.insertBefore(projects[i], projectDiv)
+        const projectName = document.querySelectorAll('.btn-project')
+        projectName[i].innerText = currentProject
         remProject[i] = document.querySelectorAll('.remove-project')[i]
         }
     }
     deleteProject()
     selectProject()
 }
-//
+// Select home tab
 export let todoSelector = 0
 const homeBtn = document.querySelector('#home-btn')
 homeBtn.addEventListener('mouseup', ()=> {
@@ -45,7 +46,6 @@ homeBtn.addEventListener('mouseup', ()=> {
     currentProjectH1.innerText = currentProject
     addListeners(home)
     clearTasks()
-    console.log(home)
     taskDOM(home)
     showTasks()
 })
@@ -83,8 +83,7 @@ function deleteProject(){
         }
     })
 }
-//
-
+// Select which project to add notes
 function selectProject(){
     const projectBtn = document.querySelectorAll('.btn-project')
     projectBtn.forEach((p,i)=>{
@@ -95,9 +94,8 @@ function selectProject(){
             todoSelector = 1
             clearTasks()
             taskDOM(project[currentIndex].todos)
+            projectDOM()
             addListeners(project[currentIndex].todos)
-
-            
         }
     })
 }
@@ -106,7 +104,7 @@ const title = document.querySelector('#project-title')
 const openProject = document.querySelector('#open-project')
 
 openProject.addEventListener('mouseup', projectListener)
-export function projectListener(){console.log('patos funcionando')
+export function projectListener(){
     const projectInfo = document.querySelector('#project-info')
     const closeProject = document.querySelector('#close-project')
     
@@ -129,7 +127,6 @@ export function projectListener(){console.log('patos funcionando')
             openProject.classList.add('active')
             addProject(currentProject, [])
             clearTasks() 
-            console.log(project)
             taskDOM(project[currentIndex].todos)
             projectDOM()
             todoSelector = 1

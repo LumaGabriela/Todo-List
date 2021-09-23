@@ -7,6 +7,9 @@
     --header:#383838;
     --task:#ff7775;
     --font:#c2c2c2;
+    --box: #faf;
+    --checked: #fff;
+    --remove: #292929;
 }
 html{width: 100%;height: 100%;}
 body{
@@ -22,21 +25,17 @@ body{
     height: 50px;
     width: 100%;
     background: var(--header);
-    justify-content: flex-end;
+    justify-content: flex-start;
 }
-#header > ul {
-    list-style: none;
+
+#header-link {
     margin: 0; padding: 0;
-    width: 40%;
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
     align-items: center;
-}
-#header ul > li {
-    display: flex;
     padding: 10px 20px;
+    color: var(--font);
 }
+#header-link > h1 {margin: 0;}
 #main{
     width: 100%; height: 100%;
     display: flex;
@@ -48,24 +47,14 @@ body{
     background: var(--menu);
     width: 35%;
 }
-#menu .options{
-    display: flex;
-    flex-direction: column;
-}
-#menu{
+#menu, #menu .options{
     display: flex;
     flex-direction: column;
 }
 #project-info, #edit-project, #open-project{
     display: none;
 }
-#edit-project.active{
-    display: flex;
-}
-#open-project.active{
-    display: flex;
-}
-#project-info.active{
+#edit-project.active, #open-project.active, #project-info.active{
     display: flex;
 }
 .projects{
@@ -88,16 +77,17 @@ body{
     align-items: center;
     padding: 15px 0 0;
 }
-
+/* Individual tasks */
 .task{
     display: flex;
     flex-direction: row;
     width: calc(100% - 15px);
-    height: 30px;
+    height: 35px;
     background:  var(--task);
     justify-content: space-between;
     align-items: center;
     margin: 0 0 10px;
+    border-radius: 7px;
 }
 .task .left{
     display: flex;
@@ -112,9 +102,7 @@ body{
     justify-content: flex-end;
     height: 100%; width: 50%;
 }
-/*  */
-
-
+/* Container with tasks */
 #task-list{
     width: 100%;
     display: flex;
@@ -138,7 +126,7 @@ body{
     display: flex;
 }
 /*  */
-.task-name{
+.task-name, .edit-titles, .edit-dates{
     display: none;
 }
 .task-name.active{
@@ -147,26 +135,22 @@ body{
     width: 80%;
     cursor: pointer;
 }
-.edit-titles{
-    display: none;
-    
-}
 .edit-titles.active{
     display: flex;
     margin: 0;
-    width: 80%;
     cursor: pointer;
+    align-items: center;
 }
 /*  */
-.edit-dates{
-    display: none;
-}
 .edit-dates.active{
     display: flex;
     cursor: pointer;
-    width: 80%; height: 100%;
+    height: 100%;
     margin: 0;
     color: var(--header);
+    align-items: center;
+    justify-content: flex-end;
+
 }
 
 .date{
@@ -184,11 +168,43 @@ body{
     cursor: pointer;
     height: 100%;
     width: 25px;
+    align-items: center;
 }
-[type='checkbox']{
+.remove > svg{
+    color: var(--remove);
+    font-size: 1.3rem;
+}
+/* Checkbox styles */
+.check{
+    position: absolute;
+    opacity: 0;
+    width: 0; height: 0;
+}
+.check-label{
+    display: flex;
+    height: 100%;
+    align-items: center;
+}
+.span-check::before{
+    content: '';
     display: flex;
     width: 25px;height: 25px;
-    margin: 0;
+    margin: 0 10px;
     cursor: pointer;
+    border-radius: 50%;
+    background: var(--box);
+}
+.span-check::after{
+    content: '';
+    position: absolute;
+    transform: translateY(-21px) translateX(19px) rotateZ(44deg);
+    display: none;
+}
+.check:checked + .span-check::after{
+    display: flex;
+    width: 8px; height: 15px;
+    border: 3px solid var(--checked);
+    border-top: none;
+    border-left: none;
 
 }

@@ -1,8 +1,5 @@
-//import {populateStorage} from './Storage'
-//
-//import {project, home, today, thisWeek} from "./Task";
-import {currentProject, projectDOM, todoSelector} from './Projects'
-import { taskDOM } from "./Todos";
+import {currentIndex, currentProject, projectDOM, todoSelector} from './Projects'
+import { taskDOM, clearTasks , addListeners} from "./Todos";
 
 
 function createTask(title, date, checked, project){
@@ -28,8 +25,6 @@ function createProject(title, todos){
 export function addProject(title, todos){
     project.push(createProject(title, todos))
     populateStorage()
-    console.log('projeto')
-
 }
 export function removeProject(i){
     project.splice(i,1)
@@ -50,32 +45,40 @@ Storage.prototype.getObj = function(key) {
     return JSON.parse(this.getItem(key))
 }
 //       //      //       //      
+// var currentHome = localStorage.getObj('currentHome') || [];  
+// var currentProjectObj = localStorage.getObj('currentProjectObj') || [];
 
 export function populateStorage(){
-    localStorage.setObj('home', home);
-    localStorage.setObj('project', project);   
+    localStorage.setObj('currentHome', home);
+    localStorage.setObj('currentProjectObj', project);   
     setStorageValues()
 }
 
 export function setStorageValues() {
-    var currentHome = localStorage.getObj('home');  
-    var currentProjectObj = localStorage.getObj('project');
-    home = currentHome 
+    var currentHome = localStorage.getObj('currentHome');  
+    var currentProjectObj = localStorage.getObj('currentProjectObj');
+    home = currentHome;
     project = currentProjectObj;
+    clearTasks()
+    if(todoSelector === 0){
+        taskDOM(home)
+    }else if(todoSelector === 1){
+        taskDOM(project[currentIndex].todos)
+    }
     console.log(project)
     console.log(home)
+    console.log(currentProjectObj)
+    console.log(currentHome) 
+}
+if(!localStorage.getObj('currentProjectObj')) {
+    populateStorage();
+  } else {
+    setStorageValues()
     if(project.length > 0){
         projectDOM();
     }
-    if(home.length > 0 & todoSelector === 0){
-        taskDOM(home);
-    }
-    
-}
-if(!localStorage.getObj('project')) {
-    populateStorage();
-  } else {
-    setStorageValues();
+    clearTasks() 
+    addListeners(home)
+    taskDOM(home);
   }
 
-//
