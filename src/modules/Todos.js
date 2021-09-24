@@ -65,13 +65,14 @@ function editTask(type){
     editInput.forEach((input,i)=>{
         input.value = editTitles[i].innerHTML
         input.onkeyup = function (event){
-            if(event.key === 'Enter'){
-                editTitles[i].innerHTML = input.value
-                type[i].title = input.value
-                populateStorage()
-                input.classList.remove('active')
-                editTitles[i].classList.add('active')
-                
+            if(event.key === 'Enter' ){
+                if( patterns.field.test(input.value)){
+                    editTitles[i].innerHTML = input.value
+                    type[i].title = input.value
+                    populateStorage()
+                    input.classList.remove('active')
+                    editTitles[i].classList.add('active')
+                }else{ window.alert('Title must be 1-20 characters')}
             }
         }
     })
@@ -133,16 +134,18 @@ btnOpen.addEventListener('mouseup', ()=> {
     }
 })
 //Add listener for open and close the title menu
-export function addListeners(selector){
-    const title = document.querySelector('#task-title').value 
+export function addListeners(selector){ 
     const taskField = document.querySelector('#task-field')
     const addTask = document.querySelector('#add-task')
+    
     addTask.onmouseup = ()=>{
-        if(patterns.title.test(title.value)=== true){
-            const title = document.querySelector('#task-title').value
+    const title = document.querySelector('#task-title').value    
+        if(patterns.field.test(title)){
             addTodo(selector , title, '', false, currentProject)
             taskDOM(selector)
             taskField.classList.remove('active')
+        }else{
+            window.alert('Title must be 1-20 characters.')
         }
     }
 }

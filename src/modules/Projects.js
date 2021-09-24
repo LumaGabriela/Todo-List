@@ -8,7 +8,7 @@ export let currentIndex = 0
 const remProject = [] 
 let projects = []
 export let patterns = {
-    title: /^.{1,20}$/,
+    field: /^.{1,20}$/,
 }
 export function projectDOM(){
     const currentProjectH1 = document.querySelector('#current-project')
@@ -27,10 +27,10 @@ export function projectDOM(){
         //create elements
         projects[i] = document.createElement('div')
         projects[i].setAttribute('class', 'projects')
-        projects[i].innerHTML = `<button class="btn-project"></button><button class="remove-project"><i class="fas fa-times"></i></button>`
+        projects[i].innerHTML = `<button class="btn-project"><i class="fas fa-tasks"></i>${currentProject}</button><button class="remove-project"><i class="fas fa-times"></i></button>`
         projectContainer.insertBefore(projects[i], projectDiv)
         const projectName = document.querySelectorAll('.btn-project')
-        projectName[i].innerText = currentProject
+        //projectName[i].innerText = currentProject
         remProject[i] = document.querySelectorAll('.remove-project')[i]
         }
     }
@@ -118,7 +118,7 @@ export function projectListener(){
     })
     const add_project = document.querySelector('#add-project')
     add_project.onmouseup = ()=>{
-        if(patterns.title.test(title.value) === true){
+        if(patterns.field.test(title.value)){
             currentProject = title.value
             currentProjectH1.innerHTML = currentProject
             editProject.value = currentProject
@@ -130,7 +130,9 @@ export function projectListener(){
             taskDOM(project[currentIndex].todos)
             projectDOM()
             todoSelector = 1
-        }    
+        }else{
+            window.alert('Title must be 1-20 characters')
+        }  
     }
 }
 
