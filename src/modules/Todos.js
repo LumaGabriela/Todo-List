@@ -56,13 +56,13 @@ function addChanges(type){
 //Allows change the title of the task
 function editTask(type){
     let editInput = document.querySelectorAll('.task-name')
-    editTitles.forEach((eTitles,i)=>{
-        eTitles.onmouseup = ()=>{
+    editTitles.forEach((eTitles, i) => {
+        eTitles.onmouseup = () => {
             eTitles.classList.remove('active')
             editInput[i].classList.add('active')
         }
     })
-    editInput.forEach((input,i)=>{
+    editInput.forEach((input, i) => {
         input.value = editTitles[i].innerHTML
         input.onkeyup = function (event){
             if(event.key === 'Enter' ){
@@ -79,8 +79,8 @@ function editTask(type){
 }
 //Change the status of the date inputs
 function changeDate(type){
-    datesText.forEach((p,i)=> {
-        p.onmouseup = ()=>{
+    datesText.forEach((p, i) => {
+        p.onmouseup = () => {
             p.classList.remove('active')
             dates[i].classList.add('active')
         }
@@ -100,19 +100,19 @@ function changeDate(type){
 //Removes an element from the task array and DOM
 export function removeDOM(type){  
     removeBtn.forEach((btn, i) => {
-        btn.onmouseup = ()=>{
+        btn.onmouseup = () => {
             btn.parentNode.parentNode.remove()
             removeTodo(i, type) 
-            todo.splice(i,1)
-            removeBtn.splice(i,1)
+            todo.splice(i, 1)
+            removeBtn.splice(i, 1)
         }
                
-    });
+    })
 }
 //Changes the status of the checkboxes
 function changeCheck(type){
-    checkbox.forEach((check,i)=> {
-        check.addEventListener('change', () =>{
+    checkbox.forEach((check, i) => {
+        check.addEventListener('change', () => {
             type[i].checked = check.checked
             populateStorage()
         })
@@ -120,11 +120,11 @@ function changeCheck(type){
 }
 
 const btnOpen = document.querySelector('#open-menu')
-btnOpen.addEventListener('mouseup', ()=> {
+btnOpen.addEventListener('mouseup', () => {
     const taskField = document.querySelector('#task-field')
     taskField.classList.add('active')
     const btnClose = document.querySelector('#close-btn')
-    btnClose.addEventListener('mouseup', ()=>{
+    btnClose.addEventListener('mouseup', () => {
         taskField.classList.remove('active')
     })
     if(todoSelector === 0){
@@ -138,13 +138,13 @@ export function addListeners(selector){
     const taskField = document.querySelector('#task-field')
     const addTask = document.querySelector('#add-task')
     
-    addTask.onmouseup = ()=>{
-    const title = document.querySelector('#task-title').value    
+    addTask.onmouseup = () => {
+        const title = document.querySelector('#task-title').value    
         if(patterns.field.test(title)){
-            addTodo(selector , title, '', false, currentProject)
+            addTodo(selector, title, '', false, currentProject)
             taskDOM(selector)
             taskField.classList.remove('active')
-        }else{
+        } else {
             window.alert('Title must be 1-20 characters.')
         }
     }
@@ -158,7 +158,7 @@ export function clearTasks(){
     editTitles = []
 
     const taskList = document.querySelector('#task-list')
-    while (taskList.childElementCount>0){
+    while (taskList.childElementCount > 0){
         taskList.firstChild.remove()
     }
 }
