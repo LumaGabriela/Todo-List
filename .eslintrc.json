@@ -19,6 +19,8 @@
         "class-methods-use-this":"error",
         "comma-dangle":"error",
         "array-callback-return":"error",
-        "no-loop-func":"error"
+        "no-loop-func":"error",
+        "for-direction":"error",
+        "switch-colon-spacing":"error"
     }
 }
